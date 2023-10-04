@@ -9,6 +9,7 @@ from typing import Union, TYPE_CHECKING
 
 from MDAnalysis.analysis.base import AnalysisBase
 import numpy as np
+import freesasa
 
 if TYPE_CHECKING:
     from MDAnalysis.core.universe import Universe, AtomGroup
@@ -74,42 +75,23 @@ class SASAAnalysis(AnalysisBase):
 
     def _prepare(self):
         """Set things up before the analysis loop begins"""
-        # This is an optional method that runs before
-        # _single_frame loops over the trajectory.
-        # It is useful for setting up results arrays
-        # For example, below we create an array to store
-        # the number of atoms with negative coordinates
-        # in each frame.
-        self.results.is_negative = np.zeros(
+        self.results.total_area = np.zeros(
             (self.n_frames, self.atomgroup.n_atoms),
             dtype=bool,
         )
 
     def _single_frame(self):
         """Calculate data from a single frame of trajectory"""
-        # This runs once for each frame of the trajectory
-        # It can contain the main analysis method, or just collect data
-        # so that analysis can be done over the aggregate data
-        # in _conclude.
-
-        # The trajectory positions update automatically
-        negative = self.atomgroup.positions < 0
-        # You can access the frame number using self._frame_index
-        self.results.is_negative[self._frame_index] = negative.any(axis=1)
+        
+        structure = freesasa.Structure()  
+        # FreeSasa structure accepts PDBS if not available requires to reconstruct the structure using `adAtom`
+        for a in self.atomgroup:
+            x,y,z = a.position            
+            structure.addAtom(a.name, a.resname, a.resnum.item(), "", x, y, z)
+        
+        result = freesasa.calc(structure)
+        
+        self.results.total_area[self._frame_index] = result.totalArea()
 
     def _conclude(self):
-        """Calculate the final results of the analysis"""
-        # This is an optional method that runs after
-        # _single_frame loops over the trajectory.
-        # It is useful for calculating the final results
-        # of the analysis.
-        # For example, below we determine the
-        # which atoms always have negative coordinates.
-        self.results.always_negative = self.results.is_negative.all(axis=0)
-        always_negative_atoms = self.atomgroup[self.results.always_negative]
-        self.results.always_negative_atoms = always_negative_atoms
-        self.results.always_negative_atom_names = always_negative_atoms.names
-
-        # results don't have to be arrays -- they can be any value, e.g. floats
-        self.results.n_negative_atoms = self.results.is_negative.sum(axis=1)
-        self.results.mean_negative_atoms = self.results.n_negative_atoms.mean()
+        self.results.mean_total_area= self.results.total_area.mean()

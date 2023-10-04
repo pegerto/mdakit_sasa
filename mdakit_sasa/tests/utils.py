@@ -6,7 +6,6 @@ import numpy as np
 
 
 def make_Universe(
-    extras: Tuple[str] = tuple(),
     size: Tuple[int, int, int] = (125, 25, 5),
     n_frames: int = 0,
     velocities: bool = False,
@@ -23,10 +22,6 @@ def make_Universe(
 
     Parameters
     ----------
-    extras : tuple of strings, optional
-      extra attributes to add to Universe:
-      u = make_Universe(('masses', 'charges'))
-      Creates a lightweight Universe with only masses and charges.
     size : tuple of int, optional
       number of elements of the Universe (n_atoms, n_residues, n_segments)
     n_frames : int
@@ -58,11 +53,7 @@ def make_Universe(
         velocities=velocities,
         forces=forces,
     )
-    if extras is None:
-        extras = []
-    for ex in extras:
-        u.add_TopologyAttr(ex)
-
+  
     if trajectory:
         pos = np.arange(3 * n_atoms * n_frames).reshape(n_frames, n_atoms, 3)
         vel = pos + 100 if velocities else None
