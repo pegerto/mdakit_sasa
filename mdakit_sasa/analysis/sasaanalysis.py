@@ -18,7 +18,8 @@ if TYPE_CHECKING:
 class SASAAnalysis(AnalysisBase):
     """SASAAnalysis class.
 
-    This class is used to perform analysis on a trajectory.
+    This class is used to compute the solvant accessible area of a trajectory.
+.
 
     Parameters
     ----------
@@ -59,17 +60,9 @@ class SASAAnalysis(AnalysisBase):
         self,
         universe_or_atomgroup: Union["Universe", "AtomGroup"],
         select: str = "all",
-        # TODO: add your own parameters here
         **kwargs
     ):
-        # the below line must be kept to initialize the AnalysisBase class!
         super().__init__(universe_or_atomgroup.trajectory, **kwargs)
-        # after this you will be able to access `self.results`
-        # `self.results` is a dictionary-like object
-        # that can should used to store and retrieve results
-        # See more at the MDAnalysis documentation:
-        # https://docs.mdanalysis.org/stable/documentation_pages/analysis/base.html?highlight=results#MDAnalysis.analysis.base.Results
-
         self.universe = universe_or_atomgroup.universe
         self.atomgroup = universe_or_atomgroup.select_atoms(select)
 
