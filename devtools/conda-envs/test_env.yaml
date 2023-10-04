@@ -7,8 +7,8 @@ dependencies:
   - python
   - pip
 
-  # MDAnalysis
   - MDAnalysis
+  - freesasa
 
   # Testing
   - pytest
