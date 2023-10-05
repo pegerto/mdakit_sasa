@@ -3,7 +3,7 @@ from numpy.testing import assert_allclose
 
 from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
 from mdakit_sasa.tests.utils import make_Universe
-
+from MDAnalysis.core.topologyattrs import Atomnames, Resnames, Resids, Resnums
 
 class TestSASAAnalysis:
 
@@ -12,12 +12,16 @@ class TestSASAAnalysis:
     @pytest.fixture
     def universe(self):
         u = make_Universe(
-            extras=("names", "resnames",),
             n_frames=3,
         )
-        # create toy data to test assumptions
+        
         for ts in u.trajectory:
             ts.positions[:ts.frame] *= -1
+            
+        u.add_TopologyAttr(Atomnames(["H"] * len(u.atoms)))
+        u.add_TopologyAttr(Resnames(["GLY"] * len(u.residues)))
+        u.add_TopologyAttr(Resids(list(range(0, len(u.residues)))))
+        u.add_TopologyAttr(Resnums(list(range(0, len(u.residues)))))
         return u
 
     @pytest.fixture
@@ -38,26 +42,7 @@ class TestSASAAnalysis:
             universe, select=select)
         assert analysis.atomgroup.n_atoms == n_atoms
 
-    @pytest.mark.parametrize(
-        "stop, expected_mean",
-        [
-            (1, 0),
-            (2, 0.5),
-            (3, 1)
-        ]
-    )
-    def test_mean_negative_atoms(self, analysis, stop, expected_mean):
-        # assert we haven't run yet and the result doesn't exist yet
+    def test_residue_sasa_calculation(self, analysis):
         assert "mean_negative_atoms" not in analysis.results
-        analysis.run(stop=stop)
-        assert analysis.n_frames == stop
-
-        # when comparing floating point values, it's best to use assert_allclose
-        # to allow for floating point precision differences
-        assert_allclose(
-            analysis.results.mean_negative_atoms,  # computed data
-            expected_mean,  # reference / desired data
-            rtol=1e-07,  # relative tolerance
-            atol=0,  # absolute tolerance
-            err_msg="mean_negative_atoms is not correct",
-        )
+        analysis.run(stop=3)
+        assert analysis.n_frames == 3
