@@ -16,14 +16,12 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 -->
 
+## 0.1.2 
+ * [Fix] Clean area calculation
+
 ## 0.1.1
-
-### Fixed
- * Area surface to be a floating type
-
+ * [Fix] Area surface to be a floating type
 
 ### 0.1
-
-### Added
- * Calculate the area of a full pdb protein
+ * [New] Calculate the area of a full pdb protein
 
