@@ -70,7 +70,7 @@ class SASAAnalysis(AnalysisBase):
     def _prepare(self):
         """Set things up before the analysis loop begins"""
         self.results.total_area = np.zeros(
-            (self.n_frames, self.atomgroup.n_atoms),
+            self.n_frames,
             dtype=float,
         )
 
