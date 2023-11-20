@@ -16,22 +16,14 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 -->
 
-## [Unreleased]
-
-### Authors
-<!-- GitHub usernames of contributors to this release -->
-
-### Added
-<!-- New added features -->
+## 0.1.1
 
 ### Fixed
-<!-- Bug fixes -->
+ * Area surface to be a floating type
 
-### Changed
-<!-- Changes in existing functionality -->
 
-### Deprecated
-<!-- Soon-to-be removed features -->
+### 0.1
 
-### Removed
-<!-- Removed features -->
+### Added
+ * Calculate the area of a full pdb protein
+
