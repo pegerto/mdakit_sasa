@@ -1,4 +1,6 @@
 import pytest
+import numpy as np
+
 from numpy.testing import assert_allclose
 
 from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
@@ -43,6 +45,11 @@ class TestSASAAnalysis:
         assert analysis.atomgroup.n_atoms == n_atoms
 
     def test_residue_sasa_calculation(self, analysis):
-        assert "mean_negative_atoms" not in analysis.results
         analysis.run(stop=3)
         assert analysis.n_frames == 3
+        
+    def test_residue_sasa_calculation_results(self, analysis):
+        analysis.run(stop=3)
+        assert analysis.n_frames == 3
+        assert analysis.results['total_area'].dtype ==  np.dtype('float64')
+        assert np.all(analysis.results['total_area'] >= 0)
