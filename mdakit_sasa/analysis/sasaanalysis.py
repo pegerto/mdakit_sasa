@@ -10,6 +10,7 @@ from typing import Union, TYPE_CHECKING
 from MDAnalysis.analysis.base import AnalysisBase
 import numpy as np
 import freesasa
+import os
 
 if TYPE_CHECKING:
     from MDAnalysis.core.universe import Universe, AtomGroup
@@ -82,9 +83,17 @@ class SASAAnalysis(AnalysisBase):
             x,y,z = a.position            
             structure.addAtom(a.name, a.resname, a.resnum.item(), "", x, y, z)
         
-        result = freesasa.calc(structure)
+        # Define 1 cpu for windows avoid freesasa code to calculate it.
+        parametes =  freesasa.Parameters()
+        if self._is_windows():
+            parametes.setNThreads(1)
+
+        result = freesasa.calc(structure, parametes)
         
         self.results.total_area[self._frame_index] = result.totalArea()
 
     def _conclude(self):
         self.results.mean_total_area= self.results.total_area.mean()
+
+    def _is_windows(self):
+        return os.name == 'nt'
