@@ -16,8 +16,9 @@ The rules for this file:
   * accompany each entry with github issue/PR number (Issue #xyz)
 -->
 
-## Next
+## 0.2.0
  * [New] Include segmentid for freesasa calculation.
+ * [New] Calculate area contributed per residue
 
 ## 0.1.2 
  * [Fix] Clean area calculation

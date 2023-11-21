@@ -2,8 +2,6 @@
 Unit and regression test for the mdakit_sasa package.
 """
 
-import mdakit_sasa
-import pytest
 import sys
 
 
