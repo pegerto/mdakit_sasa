@@ -78,10 +78,10 @@ class SASAAnalysis(AnalysisBase):
         """Calculate data from a single frame of trajectory"""
         
         structure = freesasa.Structure()  
-        # FreeSasa structure accepts PDBS if not available requires to reconstruct the structure using `adAtom`
+        # FreeSasa structure accepts PDBS if not available requires to reconstruct the structure using `addAtom`
         for a in self.atomgroup:
             x,y,z = a.position            
-            structure.addAtom(a.name, a.resname, a.resnum.item(), "", x, y, z)
+            structure.addAtom(a.name, a.resname, a.resnum.item(), a.segid, x, y, z)
         
         # Define 1 cpu for windows avoid freesasa code to calculate it.
         parametes =  freesasa.Parameters()
