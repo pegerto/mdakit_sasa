@@ -1,4 +1,4 @@
-mdakit\_sasa.analysis.sasaanalysis
+﻿mdakit\_sasa.analysis.sasaanalysis
 ==================================
 
 .. automodule:: mdakit_sasa.analysis.sasaanalysis

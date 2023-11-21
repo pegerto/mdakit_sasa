@@ -6,7 +6,7 @@ This software is available and tested on Linux/Mac/Windows
 Installation
 ------------
 
-This sofware can be installed from sources using the documentation under `github`_,  alterantive using a python package manager.
+This sofware can be installed from source using the documentation under `github`_,  alterantive using a python package manager.
 
 
 Using `Pip`_ ::
@@ -19,7 +19,7 @@ Using `Conda`_ ::
 
 
 
-SASA for a trajectory 
+SASA analisys
 ---------------------
 
 If you already familiar with MDAnaysis the first steps are simple::

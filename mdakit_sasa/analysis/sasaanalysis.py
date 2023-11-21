@@ -2,7 +2,10 @@
 SASAAnalysis --- :mod:`mdakit_sasa.analysis.SASAAnalysis`
 ===========================================================
 
-This module contains the :class:`SASAAnalysis` class.
+This module contains the :class:`SASAAnalysis` class, this class follow
+the standarised :class:`AnalysisBase` that will be familiar for MDAnalisys users.
+
+This module is the entry point for this MDA Kit.
 
 """
 from typing import Union, TYPE_CHECKING
