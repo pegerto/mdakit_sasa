@@ -2,7 +2,7 @@ mdakit-sasa
 ==============================
 [//]: # (Badges)
 
-| **Latest release** | [![Last release tag][badge_release]][url_latest_release] ![GitHub commits since latest release (by date) for a branch][badge_commits_since]  [![Documentation Status][badge_docs]][url_docs]|
+| **Latest release** | [![Last release tag][badge_release]][url_latest_release] ![GitHub commits since latest release (by date) for a branch][badge_commits_since]  [![Documentation Status][badge_docs]][url_docs][![DOI](https://zenodo.org/badge/700538110.svg)](https://zenodo.org/doi/10.5281/zenodo.10182425)|
 | :----------------- | :------- |
 | **Status**         | [![GH Actions Status][badge_actions]][url_actions] [![codecov][badge_codecov]][url_codecov] |
 | **Community**      | [![License: GPL v2][badge_license]][url_license]  [![Powered by MDAnalysis][badge_mda]][url_mda]|
@@ -20,6 +20,7 @@ mdakit-sasa
 [url_latest_release]: https://github.com/pegerto/mdakit_sasa/releases
 [url_license]: https://www.gnu.org/licenses/gpl-2.0
 [url_mda]: https://www.mdanalysis.org
+
 
 This kit allows the calculation of a solvent-accessible-surface area of a trajectory
 
