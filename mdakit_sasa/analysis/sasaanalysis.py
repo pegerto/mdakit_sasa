@@ -68,11 +68,15 @@ class SASAAnalysis(AnalysisBase):
         self.atomgroup = universe_or_atomgroup.select_atoms(select)
 
     def _prepare(self):
-        """Set things up before the analysis loop begins"""
         self.results.total_area = np.zeros(
             self.n_frames,
             dtype=float,
         )
+        self.results.residue_area = np.zeros(
+            (self.n_frames, len(self.universe.residues)),
+            dtype=float,
+        )
+
 
     def _single_frame(self):
         """Calculate data from a single frame of trajectory"""
@@ -89,9 +93,11 @@ class SASAAnalysis(AnalysisBase):
             parametes.setNThreads(1)
 
         result = freesasa.calc(structure, parametes)
+        residue_areas = [result.residueAreas()[s][r] for s in sorted(list(result.residueAreas().keys())) for r in sorted(list(result.residueAreas()[s].keys()))]
         
         self.results.total_area[self._frame_index] = result.totalArea()
-
+        self.results.residue_area[self._frame_index] = [r.total for r in residue_areas]
+        
     def _conclude(self):
         self.results.mean_total_area= self.results.total_area.mean()
 

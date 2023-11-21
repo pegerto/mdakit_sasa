@@ -45,12 +45,20 @@ class TestSASAAnalysis:
             universe, select=select)
         assert analysis.atomgroup.n_atoms == n_atoms
 
-    def test_residue_sasa_calculation(self, analysis):
+    def test_total_sasa_calculation(self, analysis):
         analysis.run(stop=3)
         assert analysis.n_frames == 3
         
-    def test_residue_sasa_calculation_results(self, analysis):
+    def test_total_sasa_calculation_results(self, analysis):
         analysis.run(stop=3)
         assert analysis.n_frames == 3
         assert analysis.results['total_area'].dtype ==  np.dtype('float64')
         assert np.all(analysis.results['total_area'] >= 0)
+
+    def test_residue_sasa_calculation_results(self, analysis):
+        analysis.run(stop=3)
+        assert analysis.n_frames == 3
+        assert analysis.results['residue_area'].dtype ==  np.dtype('float64')
+        assert np.all(analysis.results['residue_area'] >= 0)
+        assert analysis.results['residue_area'].shape == (3,25)
+        0
