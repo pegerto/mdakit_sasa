@@ -5,7 +5,7 @@ from numpy.testing import assert_allclose
 
 from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
 from mdakit_sasa.tests.utils import make_Universe
-from MDAnalysis.core.topologyattrs import Atomnames, Resnames, Resids, Resnums, Segids
+from MDAnalysis.core.topologyattrs import Atomnames, Resnames, Resids, Resnums, Segids, Atomtypes
 
 class TestSASAAnalysis:
 
@@ -25,6 +25,7 @@ class TestSASAAnalysis:
         u.add_TopologyAttr(Resids(list(range(0, len(u.residues)))))
         u.add_TopologyAttr(Resnums(list(range(0, len(u.residues)))))
         u.add_TopologyAttr(Segids(["A"] * len(u.segments)))
+        u.add_TopologyAttr(Atomtypes(["O"]* len(u.atoms)))
         return u
 
     @pytest.fixture
@@ -61,4 +62,3 @@ class TestSASAAnalysis:
         assert analysis.results['residue_area'].dtype ==  np.dtype('float64')
         assert np.all(analysis.results['residue_area'] >= 0)
         assert analysis.results['residue_area'].shape == (3,25)
-        0
