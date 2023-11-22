@@ -14,10 +14,12 @@ from MDAnalysis.analysis.base import AnalysisBase
 import numpy as np
 import freesasa
 import os
+import logging
 
 if TYPE_CHECKING:
     from MDAnalysis.core.universe import Universe, AtomGroup
 
+logger = logging.getLogger(__name__)
 
 class SASAAnalysis(AnalysisBase):
     """SASAAnalysis class.
@@ -76,7 +78,7 @@ class SASAAnalysis(AnalysisBase):
             dtype=float,
         )
         self.results.residue_area = np.zeros(
-            (self.n_frames, len(self.universe.residues)),
+            (self.n_frames, len(self.universe.residues.resids)),
             dtype=float,
         )
 
@@ -87,8 +89,8 @@ class SASAAnalysis(AnalysisBase):
         structure = freesasa.Structure()  
         # FreeSasa structure accepts PDBS if not available requires to reconstruct the structure using `addAtom`
         for a in self.atomgroup:
-            x,y,z = a.position            
-            structure.addAtom(a.name, a.resname, a.resnum.item(), a.segid, x, y, z)
+            x,y,z = a.position
+            structure.addAtom(a.type.rjust(2), a.resname, a.resnum.item(), a.segid, x, y, z)
         
         # Define 1 cpu for windows avoid freesasa code to calculate it.
         parametes =  freesasa.Parameters()
@@ -96,10 +98,16 @@ class SASAAnalysis(AnalysisBase):
             parametes.setNThreads(1)
 
         result = freesasa.calc(structure, parametes)
+
         residue_areas = [result.residueAreas()[s][r] for s in sorted(list(result.residueAreas().keys())) for r in sorted(list(result.residueAreas()[s].keys()))]
         
         self.results.total_area[self._frame_index] = result.totalArea()
-        self.results.residue_area[self._frame_index] = [r.total for r in residue_areas]
+        
+        # Defend agains residue counts mismatch
+        if  len(self.universe.residues.resids)!= len(residue_areas):
+            logger.error(f'Residude count do not match the expectation, residue SASA not in results { len(self.universe.residues.resids)} != {len(residue_areas)}')
+        else:
+            self.results.residue_area[self._frame_index] = [r.total for r in residue_areas]
         
     def _conclude(self):
         self.results.mean_total_area= self.results.total_area.mean()
