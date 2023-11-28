@@ -99,8 +99,7 @@ class SASAAnalysis(AnalysisBase):
 
         result = freesasa.calc(structure, parametes)
 
-        residue_areas = [result.residueAreas()[s][r] for s in sorted(list(result.residueAreas().keys())) for r in sorted(list(result.residueAreas()[s].keys()))]
-        
+        residue_areas = [result.residueAreas()[s][r] for s in list(result.residueAreas().keys()) for r in list(result.residueAreas()[s].keys())]
         self.results.total_area[self._frame_index] = result.totalArea()
         
         # Defend agains residue counts mismatch

@@ -1,11 +1,15 @@
 import pytest
 import numpy as np
+import MDAnalysis as mda
 
 from numpy.testing import assert_allclose
 
 from mdakit_sasa.analysis.sasaanalysis import SASAAnalysis
 from mdakit_sasa.tests.utils import make_Universe
 from MDAnalysis.core.topologyattrs import Atomnames, Resnames, Resids, Resnums, Segids, Atomtypes
+from pathlib import Path
+
+PARENT = Path(__file__).parent.parent
 
 class TestSASAAnalysis:
 
@@ -62,3 +66,16 @@ class TestSASAAnalysis:
         assert analysis.results['residue_area'].dtype ==  np.dtype('float64')
         assert np.all(analysis.results['residue_area'] >= 0)
         assert analysis.results['residue_area'].shape == (3,25)
+    
+    @pytest.mark.parametrize(
+        "pdb_file_name, res_numbers",
+        [
+            ('134L.pdb', 201)
+        ]
+    )
+    def test(self, pdb_file_name, res_numbers):
+        u = mda.Universe(PARENT / 'data' / pdb_file_name)
+        analysis = SASAAnalysis(u)
+        analysis.run()
+        assert(len(analysis.results.residue_area[0]) == res_numbers)
+        assert np.all(analysis.results['residue_area'] >= 0)
