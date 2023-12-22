@@ -1,0 +1,20 @@
+{
+    "creators": [
+        {
+            "orcid": "0000-0001-8186-8431",
+            "affiliation": "Brunel University, London",
+            "name": "Pegerto Fernandez"
+        },
+        {
+            "orcid": "0000-0002-4158-233X",
+            "affiliation": "Brunel University, London",
+            "name": "Alessando Pandini"
+        }
+    ],
+
+    "license": "GPL-2.0",
+
+    "title": "mdakit_sasa: his kit allows the calculation of a solvent-accessible-surface area of a trajectory",
+
+    "keywords": ["protein-structure", "molecular-dynamics", "computational-biology"]
+}
