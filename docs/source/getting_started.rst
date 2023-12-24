@@ -19,8 +19,8 @@ Using `Conda`_ ::
 
 
 
-SASA analisys
----------------------
+SASA analysis
+-------------
 
 If you already familiar with MDAnaysis the first steps are simple::
 
