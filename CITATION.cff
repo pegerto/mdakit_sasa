@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: mdakit-sasa
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Pegerto
+    family-names: Fernandez
+    affiliation: 'Brunel University, London'
+    orcid: 'https://orcid.org/0000-0001-8186-8431'
+  - given-names: Alessandro
+    family-names: Pandini
+    affiliation: 'Brunel University, London'
+    orcid: 'https://orcid.org/0000-0002-4158-233X'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.10182425
+abstract: >-
+  This MDAKit allows for the computation of Solvent
+  Accessible Surface Area (SASA) through MDAnalysis,
+  leveraging the essential role of FreeSASA in performing
+  the calculation.
+license: GPL-2.0
