@@ -68,7 +68,7 @@ class SASAAnalysis(AnalysisBase):
         select: str = "all",
         **kwargs
     ):
-        super().__init__(universe_or_atomgroup.trajectory, **kwargs)
+        super().__init__(universe_or_atomgroup.universe.trajectory, **kwargs)
         self.universe = universe_or_atomgroup.universe
         self.atomgroup = universe_or_atomgroup.select_atoms(select)
 

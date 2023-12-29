@@ -53,6 +53,13 @@ class TestSASAAnalysis:
     def test_total_sasa_calculation(self, analysis):
         analysis.run(stop=3)
         assert analysis.n_frames == 3
+
+    def test_with_atom_group(self, universe):
+        analysis = SASAAnalysis(
+                universe.atoms)
+        analysis.run()
+        assert analysis.n_frames == 3
+
         
     def test_total_sasa_calculation_results(self, analysis):
         analysis.run(stop=3)
