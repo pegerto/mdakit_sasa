@@ -94,7 +94,7 @@ class SASAAnalysis(AnalysisBase):
             try:
                 resname = a.resname
             except NoDataError:
-                 resname = 'ANY' # Default classifier value
+                resname = 'ANY' # Default classifier value
     
             structure.addAtom(a.type.rjust(2), resname, a.resnum.item(), a.segid, x, y, z)
         
