@@ -15,6 +15,8 @@ The rules for this file:
     * YYYY-MM-DD date format (following ISO 8601)
   * accompany each entry with github issue/PR number (Issue #xyz)
 -->
+## 0.2.7
+ * [Fix] Acess resname safely and test agains DCD
 
 ## 0.2.0
  * [New] Include segmentid for freesasa calculation.

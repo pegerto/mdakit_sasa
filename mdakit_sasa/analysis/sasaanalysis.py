@@ -11,6 +11,7 @@ This module is the entry point for this MDAKit.
 from typing import Union, TYPE_CHECKING
 
 from MDAnalysis.analysis.base import AnalysisBase
+from MDAnalysis.exceptions import NoDataError
 import numpy as np
 import freesasa
 import os
@@ -90,7 +91,12 @@ class SASAAnalysis(AnalysisBase):
         # FreeSasa structure accepts PDBS if not available requires to reconstruct the structure using `addAtom`
         for a in self.atomgroup:
             x,y,z = a.position
-            structure.addAtom(a.type.rjust(2), a.resname, a.resnum.item(), a.segid, x, y, z)
+            try:
+                resname = a.resname
+            except NoDataError:
+                resname = 'ANY' # Default classifier value
+    
+            structure.addAtom(a.type.rjust(2), resname, a.resnum.item(), a.segid, x, y, z)
         
         # Define 1 cpu for windows avoid freesasa code to calculate it.
         parametes =  freesasa.Parameters()
