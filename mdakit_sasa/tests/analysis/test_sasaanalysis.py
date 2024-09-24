@@ -75,13 +75,14 @@ class TestSASAAnalysis:
         assert analysis.results['residue_area'].shape == (3,25)
     
     @pytest.mark.parametrize(
-        "pdb_file_name, res_numbers",
+        "filename, res_numbers",
         [
-            ('134L.pdb', 201)
+            ('134L.pdb', 201),
+            ('image_vf.data', 1)
         ]
     )
-    def test(self, pdb_file_name, res_numbers):
-        u = mda.Universe(PARENT / 'data' / pdb_file_name)
+    def test(self, filename, res_numbers):
+        u = mda.Universe(PARENT / 'data' / filename)
         analysis = SASAAnalysis(u)
         analysis.run()
         assert(len(analysis.results.residue_area[0]) == res_numbers)
